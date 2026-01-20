@@ -3,5 +3,6 @@ export type ApiResponse<T> = {
     code: number;
     status: boolean;
     data: T;
-    count: number | null;
+    count?: number;
+    details?: any;
 };

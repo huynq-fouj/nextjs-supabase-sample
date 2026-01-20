@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { authenticate } from "@/app/services/auth/auth.service";
+import { createRoutes } from "@/app/shared/libs/api-handler";
+import { NextRequest } from "next/server";
 
-export async function POST(req: NextRequest) {
-  const { username, password } = await req.json();
-
-  return NextResponse.json({
-    username,
-    password
-  });
-}
+export const { POST } = createRoutes({
+  POST: async (req: NextRequest) => {
+    const authReq = await req.json();
+    const response = await authenticate(authReq);
+    return response;
+  }
+});

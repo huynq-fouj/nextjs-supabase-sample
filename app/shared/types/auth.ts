@@ -7,5 +7,5 @@ export type AuthenticationRequest = {
 
 export type AuthenticationResponse = {
     access_token: string;
-    user: User | null;
+    user: User;
 }
