@@ -1,8 +1,8 @@
 import 'server-only';
-import { apiHandler, ApiHandlerOptions } from './api-handler';
+import { apiHandler, ApiHandlerOptions, HandlerFunction } from './api-handler';
 
 type RouteHandlers = {
-  [key in 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH']?: Function;
+  [key in 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH']?: HandlerFunction;
 };
 
 export function createRoutes(handlers: RouteHandlers, options?: ApiHandlerOptions) {
@@ -10,7 +10,7 @@ export function createRoutes(handlers: RouteHandlers, options?: ApiHandlerOption
 
   for (const [method, handler] of Object.entries(handlers)) {
     if (handler) {
-      wrappedHandlers[method as keyof RouteHandlers] = apiHandler(handler as any, options);
+      wrappedHandlers[method as keyof RouteHandlers] = apiHandler(handler, options);
     }
   }
 

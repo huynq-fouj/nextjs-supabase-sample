@@ -5,7 +5,7 @@ import { Permission } from '@/app/shared/enums/Permission.enum';
 const JWT_SECRET = process.env.JWT_SECRET;
 const encodedKey = new TextEncoder().encode(JWT_SECRET);
 
-interface TokenPayload extends JWTPayload {
+export interface TokenPayload extends JWTPayload {
   userId: string;
   username: string;
   roles: Permission[];

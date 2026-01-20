@@ -1,3 +1,4 @@
+import { apiHandler, createRoutes } from '@/app/shared/libs/api-handler';
 import { NextRequest, NextResponse } from "next/server"
 
 type Params = {
@@ -6,16 +7,10 @@ type Params = {
     }
 }
 
-export async function GET(_req: NextRequest, { params }: Params) {
-  const { id } = params;
-  return NextResponse.json({ id });
-}
-
-export async function PUT(req: NextRequest, { params }: Params) {
-  const body = await req.json();
-  return NextResponse.json({ id: params.id, ...body });
-}
-
-export async function DELETE(_req: NextRequest, { params }: Params) {
-  return NextResponse.json({ success: true, id: params.id });
-}
+export const { POST } = createRoutes({
+  POST: async (req: NextRequest) => {
+    const body = await req.json();
+    
+    return NextResponse.json({ success: true, data: null });
+  }
+});

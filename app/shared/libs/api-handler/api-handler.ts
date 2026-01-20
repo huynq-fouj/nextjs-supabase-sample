@@ -1,11 +1,15 @@
 import 'server-only';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { AppError } from '@/app/shared/errors/AppError';
 import { errorResponse } from '@/app/utils/helpers/response';
-import { filter } from '../jwt/auth-filter';
 import { Permission } from '@/app/shared/enums/Permission.enum';
+import { filter, TokenPayload } from '@/app/shared/libs/jwt';
 
-type HandlerFunction = (req: Request, ...args: any[]) => Promise<NextResponse | Response>;
+export type HandlerContext = {
+  user?: TokenPayload;
+};
+
+export type HandlerFunction = (req: NextRequest, ctx: HandlerContext, ...args: any[]) => Promise<NextResponse | Response>;
 
 export type ApiHandlerOptions = {
   authenticated?: boolean;
@@ -13,13 +17,11 @@ export type ApiHandlerOptions = {
 }
 
 export function apiHandler(handler: HandlerFunction, options?: ApiHandlerOptions): HandlerFunction {
-  return async (req: Request, ...args: any[]) => {
+  return async (req, ctx = {}, ...args) => {
     try {
-      if(options?.authenticated) {
-        const user = await filter(req, options.withRoles);
-        (req as any).user = user;
-      }
-      return await handler(req, ...args);
+      if(options?.authenticated || options?.withRoles?.length) ctx.user = await filter(req, options.withRoles);
+      
+      return await handler(req, ctx, ...args);
     } catch (error: any) {
       if (error instanceof AppError) return errorResponse(error.message, error.statusCode, error.details);
 
