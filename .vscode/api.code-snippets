@@ -1,0 +1,19 @@
+{
+  "Next.js App Router API with Handler": {
+    "scope": "typescript",
+    "prefix": "napi",
+    "body": [
+      "import { createRoutes } from '@/app/shared/libs/api-handler';",
+      "import { NextRequest, NextResponse } from 'next/server';",
+      "",
+      "export const { ${1:POST} } = createRoutes({",
+      "\t${1:POST}: async (req: NextRequest) => {",
+      "\t\t${2:const body = await req.json();}",
+      "\t\t$0",
+      "\t\treturn NextResponse.json({ success: true, data: null });",
+      "\t}",
+      "});"
+    ],
+    "description": "Tạo nhanh API Route với createRoutes wrapper"
+  }
+}
