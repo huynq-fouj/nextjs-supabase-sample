@@ -1,5 +1,6 @@
 import 'server-only'
 import { User } from "@/app/shared/types";
+import { Permission } from '@/app/shared/enums/Permission.enum';
 
 export async function findUserByCredentials(u: string, p: string): Promise<User | null> {
     if (u === 'admin' && p === '123') {
@@ -7,7 +8,7 @@ export async function findUserByCredentials(u: string, p: string): Promise<User 
             id: '1',
             username: u,
             fullname: 'Admin User',
-            roles: ['ADMIN'],
+            roles: Object.values(Permission),
             dob: null,
             email: null,
             address: null,

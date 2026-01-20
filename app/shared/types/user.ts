@@ -1,3 +1,5 @@
+import { Permission } from "../enums/Permission.enum";
+
 export type User = {
     id: string;
     fullname: string;
@@ -6,5 +8,5 @@ export type User = {
     email: string | null;
     address: string | null;
     avatar: string | null;
-    roles: string[]
+    roles: Permission[]
 };

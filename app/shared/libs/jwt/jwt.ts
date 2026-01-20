@@ -1,5 +1,6 @@
 import { JWTPayload, jwtVerify, SignJWT } from 'jose';
 import 'server-only';
+import { Permission } from '@/app/shared/enums/Permission.enum';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const encodedKey = new TextEncoder().encode(JWT_SECRET);
@@ -7,7 +8,7 @@ const encodedKey = new TextEncoder().encode(JWT_SECRET);
 interface TokenPayload extends JWTPayload {
   userId: string;
   username: string;
-  roles: string[];
+  roles: Permission[];
 }
 
 export async function signToken(payload: TokenPayload, expiresIn: string = '7d'): Promise<string> {
