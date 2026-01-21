@@ -1,9 +1,9 @@
 import 'server-only';
 import { NextRequest, NextResponse } from 'next/server';
-import { AppError } from '@/app/shared/_errors/AppError';
-import { errorResponse } from '@/app/utils/helpers/response';
-import { Permission } from '@/app/shared/_enums/Permission.enum';
-import { filter, TokenPayload } from '@/app/shared/libs/jwt';
+import { AppError } from '@/app/_shared/errors/AppError';
+import { errorResponse } from '@/app/_utils/helpers/response';
+import { Permission } from '@/app/_shared/enums/permission.enum';
+import { filter, TokenPayload } from '@/app/_shared/libs/jwt';
 
 export type HandlerContext = {
   user?: TokenPayload;

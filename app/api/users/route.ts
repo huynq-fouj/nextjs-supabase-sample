@@ -1,4 +1,4 @@
-import { createRoutes } from '@/app/shared/libs/api-handler';
+import { createRoutes } from '@/app/_shared/libs/api-handler';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const { POST } = createRoutes({

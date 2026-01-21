@@ -1,10 +1,10 @@
 import 'server-only';
-import { ApiResponse, AuthenticationRequest, AuthenticationResponse } from "@/app/shared/_types";
-import { successResponse } from "@/app/utils/helpers/response";
-import { findUserByCredentials } from "../_user/user.service";
-import { signToken } from "@/app/shared/libs/jwt/jwt";
+import { ApiResponse, AuthenticationRequest, AuthenticationResponse } from "@/app/_shared/types";
+import { successResponse } from "@/app/_utils/helpers/response";
+import { findUserByCredentials } from "../user/user.service";
+import { signToken } from "@/app/_shared/libs/jwt/jwt";
 import { NextResponse } from 'next/server';
-import { AppError } from '@/app/shared/_errors/AppError';
+import { AppError } from '@/app/_shared/errors/AppError';
 
 export async function authenticate(req: AuthenticationRequest): Promise<NextResponse<ApiResponse<AuthenticationResponse>>> {
     const { username, password } = req;

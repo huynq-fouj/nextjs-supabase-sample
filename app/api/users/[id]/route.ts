@@ -1,4 +1,4 @@
-import { apiHandler, createRoutes } from '@/app/shared/libs/api-handler';
+import { apiHandler, createRoutes } from '@/app/_shared/libs/api-handler';
 import { NextRequest, NextResponse } from "next/server"
 
 type Params = {

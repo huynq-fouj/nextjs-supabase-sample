@@ -1,5 +1,5 @@
 import 'server-only';
-import { ApiResponse } from "@/app/shared/_types";
+import { ApiResponse } from "@/app/_shared/types";
 import { NextResponse } from 'next/server';
 
 export function successResponse<T>(message: string, data: T, code: number = 200, count?: number): NextResponse<ApiResponse<T>> {

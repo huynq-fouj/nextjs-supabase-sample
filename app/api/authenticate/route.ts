@@ -1,5 +1,5 @@
-import { authenticate } from "@/app/services/_auth/auth.service";
-import { createRoutes } from "@/app/shared/libs/api-handler";
+import { authenticate } from "@/app/_services/auth/auth.service";
+import { createRoutes } from "@/app/_shared/libs/api-handler";
 import { NextRequest } from "next/server";
 
 export const { POST } = createRoutes({
