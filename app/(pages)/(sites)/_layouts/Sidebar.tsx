@@ -1,5 +1,5 @@
 export default function Sidebar() {
     return (
-        <div>Sidebar work!</div>
+        <aside className="h-lvh border-r border-gray-300 w-48">Sidebar work!</aside>
     )
 }
