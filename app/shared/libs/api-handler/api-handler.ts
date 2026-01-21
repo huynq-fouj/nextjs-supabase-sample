@@ -1,8 +1,8 @@
 import 'server-only';
 import { NextRequest, NextResponse } from 'next/server';
-import { AppError } from '@/app/shared/errors/AppError';
+import { AppError } from '@/app/shared/_errors/AppError';
 import { errorResponse } from '@/app/utils/helpers/response';
-import { Permission } from '@/app/shared/enums/Permission.enum';
+import { Permission } from '@/app/shared/_enums/Permission.enum';
 import { filter, TokenPayload } from '@/app/shared/libs/jwt';
 
 export type HandlerContext = {

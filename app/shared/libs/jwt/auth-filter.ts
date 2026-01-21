@@ -1,7 +1,7 @@
 import 'server-only';
-import { AppError } from '@/app/shared/errors/AppError';
+import { AppError } from '@/app/shared/_errors/AppError';
 import { verifyToken } from './jwt';
-import { Permission } from '@/app/shared/enums/Permission.enum';
+import { Permission } from '@/app/shared/_enums/Permission.enum';
 
 export async function filter(req: Request, roles?: Permission[]) {
     const authHeader = req.headers.get('authorization');

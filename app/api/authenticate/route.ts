@@ -1,4 +1,4 @@
-import { authenticate } from "@/app/services/auth/auth.service";
+import { authenticate } from "@/app/services/_auth/auth.service";
 import { createRoutes } from "@/app/shared/libs/api-handler";
 import { NextRequest } from "next/server";
 

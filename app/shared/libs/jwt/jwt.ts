@@ -1,6 +1,6 @@
 import { JWTPayload, jwtVerify, SignJWT } from 'jose';
 import 'server-only';
-import { Permission } from '@/app/shared/enums/Permission.enum';
+import { Permission } from '@/app/shared/_enums/Permission.enum';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const encodedKey = new TextEncoder().encode(JWT_SECRET);

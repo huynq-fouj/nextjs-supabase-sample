@@ -1,4 +1,4 @@
-import { Permission } from "../enums/Permission.enum";
+import { Permission } from "../_enums/Permission.enum";
 
 export type User = {
     id: string;
