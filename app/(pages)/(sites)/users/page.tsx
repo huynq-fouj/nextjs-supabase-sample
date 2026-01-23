@@ -1,5 +1,9 @@
+import Title from "../_layouts/Title";
+
 export default function UsersPage() {
     return (
-        <div>Users page work!</div>
+        <section className="w-full h-auto">
+            <Title>Users management</Title>
+        </section>
     )
 }

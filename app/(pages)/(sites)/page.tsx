@@ -1,5 +1,9 @@
+import Title from "./_layouts/Title";
+
 export default function Page() {
     return (
-        <div>Page work!</div>
+        <section className="w-full h-auto">
+            <Title>Dashboard</Title>
+        </section>
     )
 }
