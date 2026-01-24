@@ -5,6 +5,7 @@ import Header from "./_layouts/Header";
 import Background from "./_layouts/Background";
 
 export default function SitesLayout({ children }: Readonly<{ children: ReactNode }>) {
+    
     return (
         <div className="relative">
             <Background />

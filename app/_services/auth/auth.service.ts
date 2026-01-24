@@ -28,5 +28,13 @@ export async function authenticate(req: AuthenticationRequest): Promise<NextResp
         }
     );
 
+    response.cookies.set('access_token', access_token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 60 * 60 * 24,
+    });
+
     return response;
 }
