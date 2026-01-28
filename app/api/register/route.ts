@@ -5,7 +5,6 @@ import { NextRequest } from "next/server";
 export const { POST } = createRoutes({
   POST: async (req: NextRequest) => {
     const registerReq = await req.json();
-    const response = await registerUser(registerReq);
-    return response;
+    return registerUser(registerReq);
   }
 });

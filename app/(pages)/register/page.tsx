@@ -1,10 +1,12 @@
 'use client'
 
+import { useRegister } from "@/app/_shared/hooks/useRegister";
 import { RegisterRequest } from "@/app/_shared/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
 
@@ -13,26 +15,24 @@ export default function RegisterPage() {
         handleSubmit,
         formState: { errors, isSubmitting },
     } = useForm<RegisterRequest>();
+    const { trigger, isMutating } = useRegister();
     const router = useRouter();
 
     const [error, setError] = useState<string | null>(null);
 
     const onSubmit = async (data: RegisterRequest) => {
+        if (isMutating) return;
+
         setError(null);
 
-        const res = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-
-        if (!res.ok) {
-            setError('Invalid username or password');
-            return;
+        try {
+            const res = await trigger(data);
+            console.log(res)
+            toast.success(res.message);
+            router.push('/login');
+        } catch (err: any) {
+            setError(err.message)
         }
-
-        router.push('/login');
-
     };
 
     return (
