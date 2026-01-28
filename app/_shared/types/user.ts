@@ -1,4 +1,5 @@
 import { Permission } from "../enums/permission.enum";
+import { RegisterRequest } from "./register";
 
 export type User = {
     id: string;
@@ -10,3 +11,5 @@ export type User = {
     avatar: string | null;
     roles: Permission[]
 };
+
+export type CreateUserRequest = RegisterRequest & Omit<User, 'id'>;

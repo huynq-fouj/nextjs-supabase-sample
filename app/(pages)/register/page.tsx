@@ -26,9 +26,8 @@ export default function RegisterPage() {
         setError(null);
 
         try {
-            const res = await trigger(data);
-            console.log(res)
-            toast.success(res.message);
+            await trigger(data);
+            toast.success('Register successfully!');
             router.push('/login');
         } catch (err: any) {
             setError(err.message)

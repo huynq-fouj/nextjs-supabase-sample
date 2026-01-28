@@ -1,5 +1,5 @@
 import 'server-only'
-import { ApiResponse, RegisterRequest, User } from "@/app/_shared/types";
+import { ApiResponse, CreateUserRequest, User } from "@/app/_shared/types";
 import { Permission } from '@/app/_shared/enums/permission.enum';
 import { NextResponse } from 'next/server';
 import { successResponse } from '@/app/_utils/helpers/response';
@@ -40,8 +40,8 @@ export async function findUserByCredentials(u: string, p: string): Promise<User 
     return user;
 }
 
-export async function registerUser(req: RegisterRequest): Promise<NextResponse<ApiResponse<null>>> {
-    const { username, password, confirm_password, fullname } = req;
+export async function createUser(req: CreateUserRequest): Promise<NextResponse<ApiResponse<null>>> {
+    const { username, password, confirm_password, fullname, dob, email, address, roles } = req;
 
     if (!username || !password || !confirm_password || !fullname) throw new AppError('Missing required fields');
 
@@ -56,16 +56,52 @@ export async function registerUser(req: RegisterRequest): Promise<NextResponse<A
         username,
         fullname,
         password_hash: passwordHash,
-        dob: null,
-        email: null,
+        dob,
+        email,
         avatar: null,
-        address: null,
-        roles: [Permission.USER_READ],
+        address,
+        roles,
     }
 
     const { error } = await supabase.from('users').insert(user);
 
     if(error) throw new AppError(error.message);
     
-    return successResponse('Register successfully!', null);
+    return successResponse('Create user successfully!', null, 201);
+}
+
+export async function findUserById(id: string): Promise<NextResponse<ApiResponse<User>>> {
+    if(!id) throw new AppError('Invalid user id!');
+
+    const supabase = await createClient();
+    const { data, error } = await supabase.from('users')
+    .select(
+    `
+        id,
+        username,
+        fullname,
+        avatar,
+        roles,
+        dob,
+        email,
+        address
+    `
+    ).eq('id', id).single();
+
+    if (error) throw new AppError(error.message);
+
+    if(!data) throw new AppError('User not found!', 404);
+
+    const user: User = {
+        id: data.id,
+        username: data.username,
+        fullname: data.fullname,
+        dob: data.dob,
+        email: data.email,
+        address: data.address,
+        avatar: data.avatar,
+        roles: (data.roles || []) as Permission[],
+    };
+
+    return successResponse('Get user info successfully!', user);
 }
