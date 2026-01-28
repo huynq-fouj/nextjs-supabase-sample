@@ -39,7 +39,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-4 items-center py-20">
             <h2 className="text-3xl font-bold text-gray-900 mb-10">LOGIN</h2>
             <div className="w-80">
-                <label htmlFor="username" className="text-sm mb-2 text-gray-900 font-bold">Username</label>
+                <label htmlFor="username" className="text-sm mb-2 text-gray-900 font-bold">Username<span className="text-red-500">*</span></label>
                 <input
                     type="text"
                     className="w-full rounded-lg focus:outline-none text-sm text-gray-900 border border-gray-300 px-4 py-2 h-9 hover:border-gray-900 focus:border-gray-900 transition-all"

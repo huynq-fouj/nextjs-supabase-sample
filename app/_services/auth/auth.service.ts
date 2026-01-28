@@ -21,7 +21,7 @@ export async function authenticate(req: AuthenticationRequest): Promise<NextResp
     });
 
     const response = successResponse<AuthenticationResponse>(
-        'Đăng nhập thành công!',
+        'Login successfully!',
         {
             access_token,
             user: userFromDb
