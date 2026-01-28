@@ -15,9 +15,6 @@ export async function findUserByCredentials(u: string, p: string): Promise<User 
         id,
         username,
         fullname,
-        dob,
-        email,
-        address,
         avatar,
         roles,
         password_hash
@@ -33,9 +30,9 @@ export async function findUserByCredentials(u: string, p: string): Promise<User 
         id: data.id,
         username: data.username,
         fullname: data.fullname,
-        dob: data.dob,
-        email: data.email,
-        address: data.address,
+        dob: null,
+        email: null,
+        address: null,
         avatar: data.avatar,
         roles: (data.roles || []) as Permission[],
     };
