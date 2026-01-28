@@ -10,9 +10,9 @@ export type HandlerContext = {
 };
 
 export type HandlerFunction = (req: NextRequest, context: {
-  params: Record<string, string>
+  params: Promise<{}>;
   user?: TokenPayload
-}) => Promise<NextResponse | Response>;
+}) => void | Response | Promise<void | Response>;
 
 export type ApiHandlerOptions = {
   authenticated?: boolean;
@@ -22,11 +22,11 @@ export type ApiHandlerOptions = {
 export function apiHandler(handler: HandlerFunction, options?: ApiHandlerOptions): HandlerFunction {
   return async (
     req: NextRequest,
-    context: { params: Record<string, string> }
+    context: { params: Promise<{}>; }
   ) => {
     try {
       const ctx: {
-        params: Record<string, string>
+        params: Promise<{}>;
         user?: TokenPayload
       } = {
         params: context.params,
