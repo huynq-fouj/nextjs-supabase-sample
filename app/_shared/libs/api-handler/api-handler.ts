@@ -9,7 +9,10 @@ export type HandlerContext = {
   user?: TokenPayload;
 };
 
-export type HandlerFunction = (req: NextRequest, ctx: HandlerContext, ...args: any[]) => Promise<NextResponse | Response>;
+export type HandlerFunction = (req: NextRequest, context: {
+  params: Record<string, string>
+  user?: TokenPayload
+}) => Promise<NextResponse | Response>;
 
 export type ApiHandlerOptions = {
   authenticated?: boolean;
@@ -17,11 +20,21 @@ export type ApiHandlerOptions = {
 }
 
 export function apiHandler(handler: HandlerFunction, options?: ApiHandlerOptions): HandlerFunction {
-  return async (req, ctx = {}, ...args) => {
+  return async (
+    req: NextRequest,
+    context: { params: Record<string, string> }
+  ) => {
     try {
+      const ctx: {
+        params: Record<string, string>
+        user?: TokenPayload
+      } = {
+        params: context.params,
+      }
+
       if(options?.authenticated || options?.withRoles?.length) ctx.user = await filter(req, options.withRoles);
       
-      return await handler(req, ctx, ...args);
+      return await handler(req, ctx);
     } catch (error: any) {
       if (error instanceof AppError) return errorResponse(error.message, error.statusCode, error.details);
 
