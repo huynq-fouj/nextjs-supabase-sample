@@ -1,5 +1,5 @@
 import 'server-only'
-import { ApiResponse, CreateUserRequest, User } from "@/app/_shared/types";
+import { ApiResponse, CreateUserRequest, SearchUserRequest, User } from "@/app/_shared/types";
 import { Permission } from '@/app/_shared/enums/permission.enum';
 import { NextResponse } from 'next/server';
 import { successResponse } from '@/app/_utils/helpers/response';
@@ -104,4 +104,53 @@ export async function findUserById(id: string): Promise<NextResponse<ApiResponse
     };
 
     return successResponse('Get user info successfully!', user);
+}
+
+export async function getUser(params: SearchUserRequest): Promise<NextResponse<ApiResponse<User[]>>> {
+    const { keyword = '', page = 0, size = 10 } = params;
+
+    const supabase = await createClient();
+
+    let query = supabase.from('users').select(
+      `
+        id,
+        username,
+        fullname,
+        avatar,
+        roles,
+        dob,
+        email,
+        address
+      `,
+      { count: 'exact' }
+    );
+
+    if (keyword) {
+        query = query.or(
+        `username.ilike.%${keyword}%,fullname.ilike.%${keyword}%,email.ilike.%${keyword}%`
+        );
+    }
+
+    const from = page * size;
+    const to = from + size - 1;
+
+    const { data, error, count } = await query.range(from, to);
+
+    if (error) {
+        throw new AppError(error.message);
+    }
+
+    const users: User[] =
+        data?.map((item) => ({
+        id: item.id,
+        username: item.username,
+        fullname: item.fullname,
+        dob: item.dob,
+        email: item.email,
+        address: item.address,
+        avatar: item.avatar,
+        roles: (item.roles || []) as Permission[],
+        })) ?? [];
+
+    return successResponse('Get users successfully!', users, 200, count!);
 }

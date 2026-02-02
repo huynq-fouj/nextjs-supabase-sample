@@ -1,10 +1,30 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-export interface HttpOptions<TBody = unknown> {
+export interface HttpOptions<TBody = unknown, TParams = Record<string, any>> {
   headers?: HeadersInit;
   body?: TBody;
   signal?: AbortSignal;
   baseUrl?: string;
+  params?: TParams;
+}
+
+function buildQuery(params?: Record<string, any>): string {
+  if (!params) return '';
+
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined || value === null) return;
+
+    if (Array.isArray(value)) {
+      value.forEach(v => searchParams.append(key, String(v)));
+    } else {
+      searchParams.append(key, String(value));
+    }
+  });
+
+  const query = searchParams.toString();
+  return query ? `?${query}` : '';
 }
 
 async function request<TResponse, TBody = unknown>(
@@ -12,9 +32,11 @@ async function request<TResponse, TBody = unknown>(
   url: string,
   options: HttpOptions<TBody> = {}
 ): Promise<TResponse> {
-  const { body, headers, signal, baseUrl } = options;
+  const { body, headers, signal, baseUrl, params } = options;
 
-  const res = await fetch(`${baseUrl ?? ''}${url}`, {
+  const query = buildQuery(params);
+
+  const res = await fetch(`${baseUrl ?? ''}${url}${query}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

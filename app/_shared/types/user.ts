@@ -13,3 +13,9 @@ export type User = {
 };
 
 export type CreateUserRequest = RegisterRequest & Omit<User, 'id'>;
+
+export type SearchUserRequest = {
+    keyword: string;
+    page: number;
+    size: number;
+}
