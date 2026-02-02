@@ -123,7 +123,7 @@ export async function getUser(params: SearchUserRequest): Promise<NextResponse<A
         address
       `,
       { count: 'exact' }
-    );
+    ).neq('username', 'admin');;
 
     if (keyword) {
         query = query.or(
